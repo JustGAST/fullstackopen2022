@@ -1,3 +1,4 @@
+```mermaid
 sequenceDiagram
 participant Browser
 Note over Browser: Focuses input field <br> and enters note text
@@ -17,4 +18,4 @@ Browser->>Server: https://studies.cs.helsinki.fi/exampleapp/data.json
 Server-->>Browser: data.json
 Note over Server: file with notes including new note
 Note over Browser: Browser executes the event handler<br/>that renders notes to display
-
+```
