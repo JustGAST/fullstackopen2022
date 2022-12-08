@@ -1,16 +1,22 @@
 const Statistics = ({good, neutral, bad}) => {
-  let noReviews = "no reviews yet";
-
-  const countAverage = () => ((1 * good) + (-1 * bad)) / all
-  const countPositive = () => good / all * 100
-
   const all = good + neutral + bad;
-  const average = all ? countAverage() : noReviews;
-  const positive = all ? countPositive() : noReviews;
+  const header = <h2>Statistics</h2>;
+
+  if (!all) {
+    return (
+      <>
+        {header}
+        <p>No feedback given</p>
+      </>
+    )
+  }
+
+  const average = ((1 * good) + (-1 * bad)) / all;
+  const positive = good / all * 100;
 
   return (
     <>
-      <h2>Statistics</h2>
+      {header}
       <p>good {good}</p>
       <p>neutral {neutral}</p>
       <p>bad {bad}</p>
