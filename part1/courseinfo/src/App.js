@@ -3,8 +3,6 @@ import Content from "./Content";
 import Total from "./Total";
 
 const App = () => {
-
-
   const course = {
     name: 'Half Stack application development',
     parts: [
