@@ -23,7 +23,7 @@ const App = () => {
       {
         id: 4,
         name: 'Rendering loops',
-        exercises: 6,
+        exercises: 10,
       }
     ]
   };
