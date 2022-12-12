@@ -1,6 +1,4 @@
 const CountryDetails = ({country}) => {
-  console.log(country)
-
   const languagesArray = [];
   Object.keys(country.languages).forEach(key => {
     languagesArray.push(country.languages[key]);

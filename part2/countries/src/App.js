@@ -17,7 +17,6 @@ const App = () => {
       })
   }, []);
 
-
   const countriesShown = countries.filter(
     country => country.name.common.toLowerCase().includes(filter.toLowerCase())
   );
