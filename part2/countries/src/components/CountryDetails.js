@@ -1,8 +1,10 @@
+import Weather from "./Weather";
+
 const CountryDetails = ({country}) => {
   const languagesArray = [];
   Object.keys(country.languages).forEach(key => {
     languagesArray.push(country.languages[key]);
-  })
+  });
 
   return (
     <>
@@ -17,6 +19,7 @@ const CountryDetails = ({country}) => {
         {languagesArray.map(language => <li key={language}>{language}</li>)}
       </ul>
       <img src={country.flags.svg} alt={`${country.name.common} flag`} width={500}/>
+      <Weather capital={country.capital[0]} capitalInfo={country.capitalInfo} />
     </>
   );
 };
