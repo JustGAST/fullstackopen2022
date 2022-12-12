@@ -1,9 +1,12 @@
 import PersonNumber from "./PersonNumber";
 
-const NumbersList = ({persons}) => (
+const NumbersList = ({persons, onDeletePerson}) => (
   <ul>
     {persons.map(person =>
-      <PersonNumber key={person.id} person={person}/>
+      <li key={person.id}>
+        <PersonNumber  person={person}/>&nbsp;
+        <button onClick={onDeletePerson(person.id)}>Delete</button>
+      </li>
     )}
   </ul>
 );
