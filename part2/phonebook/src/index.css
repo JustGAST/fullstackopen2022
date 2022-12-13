@@ -1,0 +1,24 @@
+.notification {
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.notification.success {
+    background-color: lightgreen;
+    color: darkgreen;
+    border-color: darkgreen;
+}
+
+.notification.danger {
+    background-color: #ffc8c8;
+    color: darkred;
+    border-color: darkred;
+}
+
+.notification.notice {
+    background-color: #fff2c8;
+    color: #8b7800;
+    border-color: #8b6b00;
+}
