@@ -37,8 +37,7 @@ const App = () => {
 
     if (persons.find(({name}) => name === newName)) {
       updatePerson(persons.find(person => person.name === newName));
-      setNewName('');
-      setNewNumber('');
+
       return;
     }
 
@@ -52,7 +51,9 @@ const App = () => {
         setNewNumber('');
         showNotification(`Person ${newPerson.name} was created`, 'success');
       })
-      .catch(error => console.log(error.message));
+      .catch(error => {
+        showNotification(error.message, 'danger');
+      });
   };
 
   const deletePerson = id => () => {
@@ -85,7 +86,7 @@ const App = () => {
         showNotification(`Person ${newPersonData.name} was updated`, 'success');
       })
       .catch(error => {
-        if (error.response.status === 404) {
+        if (error?.response?.status === 404) {
           setPersons(persons.filter(currentPerson => currentPerson.id !== person.id));
           showNotification(`Person ${person.name} has already been removed from server`, 'danger');
         } else {
