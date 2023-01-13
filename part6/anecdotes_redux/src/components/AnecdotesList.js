@@ -5,7 +5,10 @@ import {clearNotification, showNotification} from '../reducers/notificationReduc
 
 const AnecdotesList = () => {
   const dispatch = useDispatch();
-  const anecdotes = useSelector(state => state.anecdotes);
+  const filter = useSelector(state => state.filter)
+  const anecdotes = useSelector(state => (
+    state.anecdotes.filter(anecdote => anecdote.content.includes(filter))
+  ));
 
   const handleVote = (anecdote) => () => {
     dispatch(voteForAnecdote(anecdote.id));
