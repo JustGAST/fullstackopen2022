@@ -1,8 +1,9 @@
-const Anecdote = ({anecdoteText, votes}) => (
+const Anecdote = ({anecdoteText, votes, onVote}) => (
   <div>
     {anecdoteText}
     <br />
     has {votes} votes
+    <button onClick={onVote}>vote</button>
   </div>
 );
 
