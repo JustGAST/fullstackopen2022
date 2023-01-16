@@ -1,16 +1,18 @@
-import {useDispatch} from 'react-redux';
-
 import {updateFilter} from '../reducers/filterReducer';
+import {connect} from 'react-redux';
 
-const Filter = () => {
-  const dispatch = useDispatch();
-
+const Filter = ({updateFilter}) => {
   return (
     <>
       filter:
-      <input onChange={(e) => dispatch(updateFilter(e.target.value))} />
+      <input onChange={(e) => updateFilter(e.target.value)} />
     </>
   )
 }
 
-export default Filter;
+const ConnectedFilter = connect(
+  null,
+  {updateFilter}
+)(Filter)
+
+export default ConnectedFilter;
