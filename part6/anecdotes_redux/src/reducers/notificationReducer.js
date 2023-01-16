@@ -15,10 +15,16 @@ const notificationReducer = createSlice({
   }
 })
 
+let timeoutID;
+
 export const showNotification = (text, timeoutSeconds) => (
   async (dispatch) => {
     dispatch(setNotification(text))
-    setTimeout(() => dispatch(clearNotification()), timeoutSeconds * 1000)
+    if (timeoutID) {
+      clearTimeout(timeoutID);
+    }
+
+    timeoutID = setTimeout(() => dispatch(clearNotification()), timeoutSeconds * 1000);
   }
 )
 
