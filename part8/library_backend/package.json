@@ -1,0 +1,16 @@
+{
+  "name": "library_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "backend.js",
+  "scripts": {
+    "start": "node --watch backend.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alexey Rozhnov <justgast@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.10.1",
+    "graphql": "^16.6.0"
+  }
+}
