@@ -70,7 +70,7 @@ let books = [
     genres: ['classic', 'crime']
   },
   {
-    title: 'The Demon ',
+    title: 'The Demon',
     published: 1872,
     author: 'Fyodor Dostoevsky',
     id: "afa5de04-344d-11e9-a414-719c6709cf3e",
@@ -97,7 +97,7 @@ const typeDefs = gql`
   type Query {
     bookCount: Int!
     authorCount: Int!
-    allBooks(author: String): [Book!]!
+    allBooks(author: String, genre: String): [Book!]!
     allAuthors: [Author!]!
   }
 `
@@ -107,11 +107,17 @@ const resolvers = {
     bookCount: () => books.length,
     authorCount: () => authors.length,
     allBooks: (root, args) => {
-      if (args.author == null) {
-        return books
+      let filteredBooks = books;
+
+      if (args.author != null) {
+        filteredBooks = filteredBooks.filter(book => book.author === args.author);
       }
 
-      return books.filter(book => book.author === args.author)
+      if (args.genre != null) {
+        filteredBooks = filteredBooks.filter(book => book.genres.includes(args.genre))
+      }
+
+      return filteredBooks;
     },
     allAuthors: () => authors.map(author => {
       author.bookCount = books.filter(book => book.author === author.name).length;
