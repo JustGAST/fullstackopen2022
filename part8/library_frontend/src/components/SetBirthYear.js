@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useMutation} from '@apollo/client';
 import {ALL_AUTHORS, EDIT_AUTHOR} from '../queries';
 
-const SetBirthYear = () => {
+const SetBirthYear = ({authors}) => {
   const initialState = {
     name: '',
     setBornTo: '',
@@ -37,7 +37,9 @@ const SetBirthYear = () => {
         <div>
           <label>
             Name
-            <input name="name" value={formState.name} onChange={handleChange}/>
+            <select name="name" value={formState.name} onChange={handleChange}>
+              {authors.map(author => <option key={author.id} value={author.name}>{author.name}</option>)}
+            </select>
           </label>
         </div>
         <div>
