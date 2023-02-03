@@ -1,4 +1,4 @@
-const {ApolloServer} = require('apollo-server');
+const {ApolloServer, UserInputError} = require('apollo-server');
 
 const db = require('./db');
 const Book = require('./models/Book');
@@ -44,12 +44,18 @@ const resolvers = {
         author.bookCount = 0;
       }
 
-      author.bookCount = author.bookCount + 1;
-      await author.save();
+      try {
+        author.bookCount = author.bookCount + 1;
+        await author.save();
 
-      const newBook = new Book({...args, author});
-      await newBook.save();
-      await newBook.populate('author');
+        const newBook = new Book({...args, author});
+        await newBook.save();
+        await newBook.populate('author');
+      } catch (e) {
+        throw new UserInputError(e.message, {
+          invalidArgs: args
+        })
+      }
 
       return newBook;
     },
@@ -59,8 +65,14 @@ const resolvers = {
         return null;
       }
 
-      editedAuthor.born = args.setBornTo;
-      await editedAuthor.save()
+      try {
+        editedAuthor.born = args.setBornTo;
+        await editedAuthor.save()
+      } catch (e) {
+        throw new UserInputError(e.message, {
+          invalidArgs: args,
+        })
+      }
 
       return editedAuthor;
     }

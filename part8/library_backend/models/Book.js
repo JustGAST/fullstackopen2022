@@ -4,6 +4,8 @@ const bookSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
+    minLength: 2,
+    unique: true
   },
   published: {
     type: Number,
