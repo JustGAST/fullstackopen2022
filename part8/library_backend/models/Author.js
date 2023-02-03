@@ -5,7 +5,8 @@ const authorSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  born: Number
+  born: Number,
+  bookCount: Number,
 })
 
 const Author = mongoose.model('Author', authorSchema)
