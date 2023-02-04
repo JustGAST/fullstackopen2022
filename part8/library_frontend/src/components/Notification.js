@@ -10,7 +10,7 @@ const Notification = ({message}) => {
     }
 
     setTimeout(() => setShown(false), 5000)
-  }, [message, shown])
+  }, [message]) // eslint-disable-line
 
 
   if (!shown) {
