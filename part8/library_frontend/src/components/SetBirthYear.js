@@ -4,7 +4,7 @@ import {ALL_AUTHORS, EDIT_AUTHOR} from '../queries';
 
 const SetBirthYear = ({authors}) => {
   const initialState = {
-    name: '',
+    name: authors.length > 0 ? authors[0].name : '',
     setBornTo: '',
   };
 

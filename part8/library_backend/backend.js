@@ -112,8 +112,6 @@ const resolvers = {
         throw new UserInputError("No such user")
       }
 
-      console.log(args.password, user);
-
       if (!bcrypt.compareSync(args.password, user.passwordHash)) {
         throw new UserInputError("Invalid password")
       }
@@ -135,16 +133,14 @@ const server = new ApolloServer({
   resolvers,
   context: async ({req}) => {
     const auth = req ? req.headers.authorization : null;
-    if (!(auth && auth.toLowerCase().startsWith('bearer '))) {
-      return
+    if (auth && auth.toLowerCase().startsWith('bearer ')) {
+      const decodedToken = jwt.verify(
+        auth.substring(7), process.env.JWT_SECRET
+      )
+
+      const currentUser = await User.findById(decodedToken.id)
+      return {currentUser}
     }
-
-    const decodedToken = jwt.verify(
-      auth.substring(7), process.env.JWT_SECRET
-    )
-
-    const currentUser = await User.findById(decodedToken.id)
-    return {currentUser}
   }
 })
 
