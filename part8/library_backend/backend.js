@@ -49,22 +49,23 @@ const resolvers = {
       if (author === null) {
         author = new Author({name: args.author});
         author.bookCount = 0;
+        await author.save();
       }
 
       try {
-        author.bookCount = author.bookCount + 1;
-        await author.save();
-
         const newBook = new Book({...args, author});
         await newBook.save();
         await newBook.populate('author');
+
+        author.bookCount = author.bookCount + 1;
+        await author.save();
+
+        return newBook;
       } catch (e) {
         throw new UserInputError(e.message, {
           invalidArgs: args
         })
       }
-
-      return newBook;
     },
     editAuthor: async (root, args, context) => {
       if (context.currentUser == null) {

@@ -30,6 +30,7 @@ const App = () => {
     setToken(null)
     localStorage.removeItem('library-token')
     client.resetStore()
+    setPage('authors')
   }
 
   const showError = (error) => {
