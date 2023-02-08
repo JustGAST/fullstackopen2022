@@ -3,12 +3,21 @@ import {useMutation} from '@apollo/client';
 import {ADD_BOOK, ALL_AUTHORS, ALL_BOOKS, ALL_GENRES} from '../queries';
 
 const AddBook = (props) => {
-  // todo: update FAVORITE_GENRE_BOOKS appending book
   const [addBook] = useMutation(ADD_BOOK, {
-    refetchQueries: [{query: ALL_BOOKS}, {query: ALL_AUTHORS}, {query: ALL_GENRES}],
-    onError: error => {
-      console.log(error);
-      props.setError(error.message)
+    update: (cache, {data: addBookQueryResult}) => {
+      cache.updateQuery({query: ALL_BOOKS}, ({allBooks}) => ({
+        allBooks: allBooks.concat(addBookQueryResult.addBook)
+      }));
+
+      cache.updateQuery({query: ALL_AUTHORS}, ({allAuthors}) => ({
+        allAuthors: allAuthors.concat(addBookQueryResult.addBook.author)
+      }));
+
+      cache.updateQuery({query: ALL_GENRES}, ({allGenres}) => ({
+        allGenres: addBookQueryResult.genres && addBookQueryResult.genres.length > 0
+          ? allGenres.concat(addBookQueryResult.genres)
+          : allGenres
+      }));
     }
   });
 
@@ -23,19 +32,24 @@ const AddBook = (props) => {
   }
 
   const submit = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    await addBook({
-      variables: {
-        title, author, published: Number(published), genres
-      }
-    })
+    try {
+      await addBook({
+        variables: {
+          title, author, published: Number(published), genres
+        }
+      });
 
-    setTitle('')
-    setPublished('')
-    setAuthor('')
-    setGenres([])
-    setGenre('')
+      setTitle('');
+      setPublished('');
+      setAuthor('');
+      setGenres([]);
+      setGenre('');
+    } catch (e) {
+      console.log(e);
+      props.setError(e.message);
+    }
   }
 
   const addGenre = () => {
