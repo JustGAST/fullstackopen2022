@@ -34,6 +34,12 @@ const resolvers = {
       return Book.find(filter).populate('author');
     },
     allAuthors: async () => Author.find({}),
+    allGenres: async () => {
+      const books = await Book.find({})
+      const genres = [...new Set(books.map(book => book.genres).flat().filter(Boolean))].sort()
+
+      return genres
+    },
     me: (root, args, context) => {
       return context.currentUser;
     }

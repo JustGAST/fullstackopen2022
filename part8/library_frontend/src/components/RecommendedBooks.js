@@ -1,5 +1,5 @@
 import {useLazyQuery, useQuery} from '@apollo/client';
-import {FAVORITE_GENRE_BOOKS, ME} from '../queries';
+import {ALL_BOOKS, ME} from '../queries';
 import BooksTable from './BooksTable';
 import {useEffect} from 'react';
 
@@ -12,7 +12,7 @@ const RecommendedBooks = ({show}) => {
     called: booksQueryCalled,
     loading: booksLoading,
     data: booksData
-  }] = useLazyQuery(FAVORITE_GENRE_BOOKS);
+  }] = useLazyQuery(ALL_BOOKS);
 
   useEffect(() => {
     if (meQuery.data?.me?.favoriteGenre) {
@@ -30,7 +30,10 @@ const RecommendedBooks = ({show}) => {
     return <>Loading...</>;
   }
 
-  return <BooksTable books={booksData.allBooks}/>;
+  return <div>
+    <h2>recommended books</h2>
+    <BooksTable books={booksData.allBooks}/>
+  </div>;
 };
 
 export default RecommendedBooks;

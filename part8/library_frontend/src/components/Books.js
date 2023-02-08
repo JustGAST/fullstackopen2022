@@ -1,26 +1,33 @@
 import {useQuery} from '@apollo/client';
-import {ALL_BOOKS} from '../queries';
-import {useState} from 'react';
+import {ALL_BOOKS, ALL_GENRES} from '../queries';
 import BooksTable from './BooksTable';
+import {useState} from 'react';
 
 const Books = (props) => {
   const booksQueryResult = useQuery(ALL_BOOKS);
-  const [genreFilter, setGenreFilter] = useState(null);
+  const genresQueryResult = useQuery(ALL_GENRES);
+
+  const [selectedGenre, setSelectedGenre] = useState(null)
 
   if (!props.show) {
     return null;
   }
 
-  if (booksQueryResult.loading) {
+  if (booksQueryResult.loading || genresQueryResult.loading) {
     return <>Loading...</>;
   }
 
-  let {allBooks: books} = booksQueryResult.data;
-
-  const genres = [...new Set(books.map(book => book.genres).flat())].sort();
-  if (genreFilter !== null) {
-    books = books.filter(book => book.genres.includes(genreFilter));
+  const setGenre = (genre) => {
+    setSelectedGenre(genre)
+    booksQueryResult.refetch({
+      genre
+    })
   }
+
+  let books = booksQueryResult.data.allBooks;
+  const genres = genresQueryResult.data.allGenres;
+
+  const setActiveButton = (condition) => ({fontWeight: condition ? 'bold' : 'normal'})
 
   return (
     <div>
@@ -33,13 +40,16 @@ const Books = (props) => {
           <button
             key={genre}
             type={'button'}
-            onClick={() => setGenreFilter(genre)}>
+            onClick={() => setGenre(genre)}
+            style={setActiveButton(genre === selectedGenre)}
+          >
             {genre}
           </button>
         ))}
         <button
           type={'button'}
-          onClick={() => setGenreFilter(null)}
+          onClick={() => setGenre(null)}
+          style={setActiveButton(selectedGenre === null)}
           >
           all genres
         </button>
