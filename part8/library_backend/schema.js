@@ -1,4 +1,4 @@
-const {gql} = require('apollo-server');
+const gql = require('graphql-tag');
 
 const typeDefs = gql`
     type Book {
@@ -51,4 +51,4 @@ const typeDefs = gql`
     }
 `
 
-module.exports = {typeDefs}
+module.exports = typeDefs
