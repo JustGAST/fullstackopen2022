@@ -1,9 +1,15 @@
-const Book = require('./models/Book');
-const Author = require('./models/Author');
 const {GraphQLError} = require('graphql');
 const bcrypt = require('bcrypt');
-const User = require('./models/User');
 const jwt = require('jsonwebtoken');
+const { PubSub } = require('graphql-subscriptions')
+
+const Book = require('./models/Book');
+const Author = require('./models/Author');
+const User = require('./models/User');
+
+const pubsub = new PubSub();
+
+const BOOK_ADDED_EVENT = 'BOOK_ADDED';
 
 const resolvers = {
   Query: {
@@ -58,6 +64,8 @@ const resolvers = {
 
         author.bookCount = author.bookCount + 1;
         await author.save();
+
+        pubsub.publish(BOOK_ADDED_EVENT, {bookAdded: newBook})
 
         return newBook;
       } catch (e) {
@@ -149,7 +157,12 @@ const resolvers = {
         value: token
       }
     }
+  },
+  Subscription: {
+    bookAdded: {
+      subscribe: () => pubsub.asyncIterator(BOOK_ADDED_EVENT)
+    }
   }
 }
 
-module.export = resolvers
+module.exports = resolvers
