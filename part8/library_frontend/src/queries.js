@@ -29,8 +29,9 @@ export const ALL_AUTHORS = gql`
             ...AuthorFullInfo
         }
 
-        ${FRAGMENT_AUTHOR_FULL}
     }
+    
+    ${FRAGMENT_AUTHOR_FULL}
 `;
 
 export const ALL_BOOKS = gql`
@@ -84,4 +85,15 @@ export const LOGIN = gql`
             value
         }
     }
+`
+
+export const BOOK_ADDED_SUBSCRIPTION = gql`
+    subscription {
+        bookAdded {
+            ...BookWithAuthor
+        }
+        
+    }
+    
+    ${FRAGMENT_BOOK_WITH_AUTHOR}
 `

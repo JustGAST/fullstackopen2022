@@ -5,8 +5,9 @@ import Books from './components/Books'
 import AddBook from './components/AddBook'
 import LoginForm from './components/LoginForm';
 import Notification from './components/Notification';
-import {useApolloClient} from '@apollo/client';
+import {useApolloClient, useSubscription} from '@apollo/client';
 import RecommendedBooks from './components/RecommendedBooks';
+import {ALL_AUTHORS, ALL_BOOKS, ALL_GENRES, BOOK_ADDED_SUBSCRIPTION} from './queries';
 
 const App = () => {
   const client = useApolloClient()
@@ -21,6 +22,43 @@ const App = () => {
       setToken(localToken);
     }
   }, [])
+
+  useSubscription(BOOK_ADDED_SUBSCRIPTION, {
+    onData: ({data}) => {
+      console.log(data);
+      const addedBook = data.data.bookAdded;
+      console.log(addedBook);
+
+      showError(`Book "${addedBook.title}" added`)
+
+      client.cache.updateQuery({query: ALL_BOOKS}, ({allBooks}) => {
+        console.log("allBooks", allBooks);
+        return {allBooks: allBooks.concat(addedBook)}
+      })
+
+      client.cache.updateQuery({query: ALL_AUTHORS}, ({allAuthors}) => {
+        if (allAuthors.find(author => author.name === addedBook.author.name)) {
+          return allAuthors;
+        }
+
+        console.log(addedBook.author);
+
+        return {
+          allAuthors: allAuthors.concat(addedBook.author)
+        }
+      });
+
+      client.cache.updateQuery({query: ALL_GENRES}, ({allGenres}) => {
+        console.log(addedBook.genres, allGenres);
+
+        return ({
+          allGenres: allGenres.find(genre => addedBook.genres.includes(genre))
+            ? allGenres
+            : allGenres.concat(addedBook.genres)
+        });
+      });
+    }
+  })
 
   const onTokenSet = (token) => {
     setToken(token)

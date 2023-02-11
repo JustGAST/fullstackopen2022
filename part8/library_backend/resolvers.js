@@ -60,10 +60,10 @@ const resolvers = {
       try {
         const newBook = new Book({...args, author});
         await newBook.save();
-        await newBook.populate('author');
 
         author.bookCount = author.bookCount + 1;
         await author.save();
+        await newBook.populate('author');
 
         pubsub.publish(BOOK_ADDED_EVENT, {bookAdded: newBook})
 
