@@ -25,23 +25,19 @@ const App = () => {
 
   useSubscription(BOOK_ADDED_SUBSCRIPTION, {
     onData: ({data}) => {
-      console.log(data);
       const addedBook = data.data.bookAdded;
       console.log(addedBook);
 
       showError(`Book "${addedBook.title}" added`)
 
-      client.cache.updateQuery({query: ALL_BOOKS}, ({allBooks}) => {
-        console.log("allBooks", allBooks);
-        return {allBooks: allBooks.concat(addedBook)}
-      })
+      client.cache.updateQuery({query: ALL_BOOKS}, ({allBooks}) => ({
+        allBooks: allBooks.concat(addedBook)
+      }))
 
       client.cache.updateQuery({query: ALL_AUTHORS}, ({allAuthors}) => {
         if (allAuthors.find(author => author.name === addedBook.author.name)) {
-          return allAuthors;
+          return {allAuthors};
         }
-
-        console.log(addedBook.author);
 
         return {
           allAuthors: allAuthors.concat(addedBook.author)
@@ -49,8 +45,6 @@ const App = () => {
       });
 
       client.cache.updateQuery({query: ALL_GENRES}, ({allGenres}) => {
-        console.log(addedBook.genres, allGenres);
-
         return ({
           allGenres: allGenres.find(genre => addedBook.genres.includes(genre))
             ? allGenres
