@@ -1,13 +1,14 @@
 import {useEffect, useState} from 'react';
 
-import Authors from './components/Authors'
-import Books from './components/Books'
-import AddBook from './components/AddBook'
+import Authors from './components/Authors';
+import Books from './components/Books';
+import AddBook from './components/AddBook';
 import LoginForm from './components/LoginForm';
 import Notification from './components/Notification';
 import {useApolloClient, useSubscription} from '@apollo/client';
 import RecommendedBooks from './components/RecommendedBooks';
-import {ALL_AUTHORS, ALL_BOOKS, ALL_GENRES, BOOK_ADDED_SUBSCRIPTION} from './queries';
+import {BOOK_ADDED_SUBSCRIPTION} from './queries';
+import {updateCache} from './helpers/updateCache';
 
 const App = () => {
   const client = useApolloClient()
@@ -30,27 +31,7 @@ const App = () => {
 
       showError(`Book "${addedBook.title}" added`)
 
-      client.cache.updateQuery({query: ALL_BOOKS}, ({allBooks}) => ({
-        allBooks: allBooks.concat(addedBook)
-      }))
-
-      client.cache.updateQuery({query: ALL_AUTHORS}, ({allAuthors}) => {
-        if (allAuthors.find(author => author.name === addedBook.author.name)) {
-          return {allAuthors};
-        }
-
-        return {
-          allAuthors: allAuthors.concat(addedBook.author)
-        }
-      });
-
-      client.cache.updateQuery({query: ALL_GENRES}, ({allGenres}) => {
-        return ({
-          allGenres: allGenres.find(genre => addedBook.genres.includes(genre))
-            ? allGenres
-            : allGenres.concat(addedBook.genres)
-        });
-      });
+      updateCache(client.cache, addedBook)
     }
   })
 

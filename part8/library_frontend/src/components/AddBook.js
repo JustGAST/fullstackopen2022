@@ -1,23 +1,12 @@
 import {useState} from 'react';
 import {useMutation} from '@apollo/client';
-import {ADD_BOOK, ALL_AUTHORS, ALL_BOOKS, ALL_GENRES} from '../queries';
+import {ADD_BOOK} from '../queries';
+import {updateCache} from '../helpers/updateCache';
 
 const AddBook = (props) => {
   const [addBook] = useMutation(ADD_BOOK, {
     update: (cache, {data: addBookQueryResult}) => {
-      cache.updateQuery({query: ALL_BOOKS}, ({allBooks}) => ({
-        allBooks: allBooks.concat(addBookQueryResult.addBook)
-      }));
-
-      cache.updateQuery({query: ALL_AUTHORS}, ({allAuthors}) => ({
-        allAuthors: allAuthors.concat(addBookQueryResult.addBook.author)
-      }));
-
-      cache.updateQuery({query: ALL_GENRES}, ({allGenres}) => ({
-        allGenres: addBookQueryResult.genres && addBookQueryResult.genres.length > 0
-          ? allGenres.concat(addBookQueryResult.genres)
-          : allGenres
-      }));
+      updateCache(cache, addBookQueryResult.addBook)
     }
   });
 
