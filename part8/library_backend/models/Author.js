@@ -8,7 +8,10 @@ const authorSchema = new mongoose.Schema({
     unique: true,
   },
   born: Number,
-  bookCount: Number,
+  books: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Book'
+  }],
 })
 
 const Author = mongoose.model('Author', authorSchema)

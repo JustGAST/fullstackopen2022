@@ -43,6 +43,11 @@ const resolvers = {
       return context.currentUser;
     }
   },
+  Author: {
+    bookCount: async (root) => {
+      return root.books.length
+    }
+  },
   Mutation: {
     addBook: async (root, args, context) => {
       if (context.currentUser == null) {
@@ -53,15 +58,13 @@ const resolvers = {
 
       if (author === null) {
         author = new Author({name: args.author});
-        author.bookCount = 0;
-        await author.save();
       }
 
       try {
         const newBook = new Book({...args, author});
         await newBook.save();
 
-        author.bookCount = author.bookCount + 1;
+        author.books.push(newBook);
         await author.save();
         await newBook.populate('author');
 

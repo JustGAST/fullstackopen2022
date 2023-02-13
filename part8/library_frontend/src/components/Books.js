@@ -24,8 +24,8 @@ const Books = (props) => {
     })
   }
 
-  let books = booksQueryResult.data.allBooks;
-  const genres = genresQueryResult.data.allGenres;
+  const books = booksQueryResult.data?.allBooks;
+  const genres = genresQueryResult.data?.allGenres;
 
   const setActiveButton = (condition) => ({fontWeight: condition ? 'bold' : 'normal'})
 

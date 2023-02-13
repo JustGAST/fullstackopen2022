@@ -32,7 +32,7 @@ const RecommendedBooks = ({show}) => {
 
   return <div>
     <h2>recommended books</h2>
-    <BooksTable books={booksData.allBooks}/>
+    <BooksTable books={booksData?.allBooks}/>
   </div>;
 };
 

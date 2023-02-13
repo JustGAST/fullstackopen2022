@@ -9,19 +9,14 @@ export const updateCache = (cache, addedBook) => {
     })
   }
 
-  cache.updateQuery({query: ALL_BOOKS}, ({allBooks}) => {
-    console.log(uniqueByKey(allBooks.concat(addedBook), 'title'));
-    return ({
+  cache.updateQuery({query: ALL_BOOKS}, ({allBooks}) =>
+    ({
       allBooks: uniqueByKey(allBooks.concat(addedBook), 'title')
-    });
-  })
+    }))
 
-  cache.updateQuery({query: ALL_AUTHORS}, ({allAuthors}) => {
-    console.log(uniqueByKey(allAuthors.concat(addedBook.author), 'name'));
-    return {
-      allAuthors: uniqueByKey(allAuthors.concat(addedBook.author), 'name')
-    }
-  });
+  cache.updateQuery({query: ALL_AUTHORS}, ({allAuthors}) => ({
+    allAuthors: uniqueByKey(allAuthors.concat(addedBook.author), 'name')
+  }));
 
   cache.updateQuery({query: ALL_GENRES}, ({allGenres}) => {
     return ({
