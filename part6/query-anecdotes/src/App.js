@@ -11,7 +11,7 @@ const App = () => {
     onSuccess: (votedAnecdote) => {
       const anecdotes = queryClient.getQueryData('anecdotes')
       queryClient.setQueryData('anecdotes',
-        anecdotes.map(anecdote => anecdote.id === votedAnecdote ? votedAnecdote : anecdote)
+        anecdotes.map(anecdote => anecdote.id === votedAnecdote.id ? votedAnecdote : anecdote)
       )
     }
   })
