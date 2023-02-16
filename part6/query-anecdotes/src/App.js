@@ -1,18 +1,21 @@
-import AnecdoteForm from './components/AnecdoteForm'
-import Notification from './components/Notification'
+import AnecdoteForm from './components/AnecdoteForm';
+import Notification from './components/Notification';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 
 import {getAll, voteAnecdote} from './queries';
+import {useSetNotification} from './context/NotificationContextProvider';
 
 const App = () => {
   const queryClient = useQueryClient();
   const result = useQuery('anecdotes', getAll)
+  const setNotification = useSetNotification();
   const voteAnecdoteMutation = useMutation(voteAnecdote, {
-    onSuccess: (votedAnecdote) => {
+    onSuccess: ({data: votedAnecdote}) => {
       const anecdotes = queryClient.getQueryData('anecdotes')
       queryClient.setQueryData('anecdotes',
         anecdotes.map(anecdote => anecdote.id === votedAnecdote.id ? votedAnecdote : anecdote)
       )
+      setNotification(`Anecdote "${votedAnecdote.content} was voted, it has ${votedAnecdote.votes} votes now"`)
     }
   })
 
@@ -34,8 +37,8 @@ const App = () => {
   return (
     <div>
       <h3>Anecdote app</h3>
-    
-      <Notification />
+
+      <Notification/>
       <AnecdoteForm />
     
       {anecdotes.map(anecdote =>
