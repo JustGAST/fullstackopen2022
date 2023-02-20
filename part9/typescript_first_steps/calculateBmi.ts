@@ -1,5 +1,5 @@
 export const calculateBmi = (weight: number, height: number): string => {
-    const bmi = weight / (height ^ 2);
+    const bmi = weight / Math.pow(height, 2);
     switch (true) {
         case bmi < 16.0:
             return 'Underweight (Severe thinness)';
@@ -18,6 +18,6 @@ export const calculateBmi = (weight: number, height: number): string => {
         case bmi >= 40.0:
             return 'Obese (Class III)';
         default:
-            return 'Cannot calculate BMI'
+            return 'Cannot calculate BMI';
     }
-}
+};

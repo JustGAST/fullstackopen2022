@@ -22,10 +22,13 @@ const calculateExercises = (hours: number[], target: number): Result => {
         case difference >= 0 && difference < 0.3:
             rating = 2;
             ratingDescription = 'Good';
-            break
+            break;
         case difference >= 0.3:
             rating = 1;
             ratingDescription = 'Not bad';
+            break;
+        default:
+            throw new Error("Can't calculate result");
     }
 
     return {
@@ -36,28 +39,28 @@ const calculateExercises = (hours: number[], target: number): Result => {
         average: averageTrainingHours,
         rating,
         ratingDescription
-    }
-}
+    };
+};
 
 const parseExerciseArgs = (args: string[]): { hours: number[], target: number } =>  {
     if (args.length < 3) {
-        throw new Error("Provide exercise hours by days")
+        throw new Error("Provide exercise hours by days");
     }
 
     const argsNumbers: number[] = args.slice(2).map(arg => {
-        const argNumber = Number(arg)
+        const argNumber = Number(arg);
         if (isNaN(argNumber)) {
             throw new Error("Arguments should be numbers");
         }
         if (argNumber > 24) {
-            throw new Error("Specify hours of day, not more")
+            throw new Error("Specify hours of day, not more");
         }
 
         return argNumber;
-    })
+    });
 
-    return {hours: argsNumbers.slice(1), target: argsNumbers[0]}
-}
+    return {hours: argsNumbers.slice(1), target: argsNumbers[0]};
+};
 
-const exerciseArgs = parseExerciseArgs(process.argv)
-console.log(calculateExercises(exerciseArgs.hours, exerciseArgs.target))
+const exerciseArgs = parseExerciseArgs(process.argv);
+console.log(calculateExercises(exerciseArgs.hours, exerciseArgs.target));

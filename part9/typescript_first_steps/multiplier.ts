@@ -11,6 +11,6 @@ const multiplier = (a: number, b: number, op: Operation) => {
         case "divide":
             console.log(a / b);
     }
-}
+};
 
-multiplier(4,  5, "divide" )
+multiplier(4,  5, "divide" );
