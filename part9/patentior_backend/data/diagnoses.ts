@@ -1,4 +1,4 @@
-import {Diagnose} from "../src/services/diagnosesService";
+import {Diagnose} from "../src/types";
 
 const data: Diagnose[] = [
   {

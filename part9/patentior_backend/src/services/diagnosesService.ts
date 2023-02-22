@@ -1,14 +1,7 @@
 import diagnoses from '../../data/diagnoses';
+import {Diagnose} from "../types";
 
-export type Diagnose = {
-    code: string,
-    name: string,
-    latin?: string
-};
-
-const getDiagnoses = (): Diagnose[] => {
-    return diagnoses;
-};
+const getDiagnoses = (): Diagnose[] => diagnoses;
 
 const addDiagnose = () => {
     return null;
