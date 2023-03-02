@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Diaries from "./components/Diaries";
 import {DiaryEntry} from "./types";
 import diaryService from "./services/diaryService"
+import DiaryForm from "./components/DiaryForm";
 
 function App() {
   const [diaries, setDiaries] = useState<DiaryEntry[]>([]);
@@ -13,7 +14,8 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Diary entries</h1>
+    <DiaryForm />
+      <h2>Diary entries</h2>
       <Diaries diaries={diaries} />
     </div>
   );
