@@ -1,7 +1,7 @@
 import React, {ChangeEvent, SyntheticEvent, useState} from "react";
 import axios from "axios";
 
-import {NewDiaryEntry} from "../types";
+import {NewDiaryEntry, Visibility, Weather} from "../types";
 import diaryService from "../services/diaryService";
 
 const DiaryForm = () => {
@@ -11,8 +11,12 @@ const DiaryForm = () => {
         visibility: '',
         weather: '',
     };
+
     const [newDiary, setNewDiary] = useState<NewDiaryEntry>(initialState)
     const [error, setError] = useState('');
+
+    const weatherOptions = Object.values(Weather).map(w => w.toString());
+    const visibilityOptions = Object.values(Visibility).map(v => v.toString());
 
     const handleSubmit = (e: SyntheticEvent) => {
         e.preventDefault()
@@ -47,21 +51,29 @@ const DiaryForm = () => {
                     </label>
                 </div>
                 <div>
+                        visibility:{' '}
+                        {visibilityOptions.map(visibility => (
+                            <label key={visibility}>
+                                <input name='visibility' value={visibility} onChange={handleChange} type="radio"/>
+                                {visibility}{' '}
+                            </label>
+                        ))}
+                </div>
+                <div>
+                    <label>
+                        weather:{' '}
+                        {weatherOptions.map(weather => (
+                            <span key={weather}>
+                                <input name='weather' value={weather} onChange={handleChange} type="radio"/>
+                                {weather}{' '}
+                            </span>
+                        ))}
+                    </label>
+                </div>
+                <div>
                     <label>
                         comment:
                         <input name='comment' value={newDiary.comment} onChange={handleChange} type='text'/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        visibility:
-                        <input name='visibility' value={newDiary.visibility} onChange={handleChange} type='text'/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        weather:
-                        <input name='weather' value={newDiary.weather} onChange={handleChange} type='text'/>
                     </label>
                 </div>
                 <div>
