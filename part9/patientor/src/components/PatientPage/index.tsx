@@ -20,7 +20,7 @@ const PatientPage = () => {
         };
 
         void fetchPatient()
-    })
+    }, [patientIdMatch]);
 
     if (!patient) {
         return <div>Loading...</div>

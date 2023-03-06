@@ -29,13 +29,37 @@ export interface BaseEntry {
     date: string;
     specialist: string;
     type: EntryType;
-    diagnosisCode?: Array<Diagnose['code']>;
+    diagnosisCodes?: Array<Diagnose['code']>;
 }
 
 export interface HealthCheckEntry extends BaseEntry {
     type: EntryType.HealthCheck;
     healthCheckRating: HealthCheckRating;
 }
+
+export interface OccupationalHealthcareEntry extends BaseEntry {
+    type: EntryType.OccupationalHealthcare;
+    employerName: string;
+    sickLeave: {
+        startDate: string;
+        endDate: string;
+    }
+}
+
+export interface HospitalEntry extends BaseEntry {
+    type: EntryType.Hospital;
+    discharge: {
+        date: string;
+        criteria: string;
+    }
+}
+
+export type Entry = HealthCheckEntry | OccupationalHealthcareEntry | HospitalEntry;
+
+// Define special omit for unions
+export type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
+// Define Entry without the 'id' property
+export type EntryWithoutId = UnionOmit<Entry, 'id'>;
 
 export type Patient = {
     id: string,

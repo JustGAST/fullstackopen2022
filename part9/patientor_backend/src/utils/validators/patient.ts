@@ -1,4 +1,4 @@
-import {Gender, NewPatient} from "../../types";
+import {Entry, EntryType, Gender, NewPatient} from "../../types";
 import {isDate, isString} from "./common";
 
 export const toNewPatient = (data: unknown): NewPatient => {
@@ -6,7 +6,7 @@ export const toNewPatient = (data: unknown): NewPatient => {
         throw new Error("data is not present or not an object");
     }
 
-    if (!("name" in data && "dateOfBirth" in data && "gender" in data && "occupation" in data && "ssn" in data)) {
+    if (!("name" in data && "dateOfBirth" in data && "gender" in data && "occupation" in data && "ssn" in data && "entries" in data)) {
         throw new Error("some fields are missing: name, dateOfBirth, gender, occupation, ssn");
     }
 
@@ -16,7 +16,7 @@ export const toNewPatient = (data: unknown): NewPatient => {
         gender: parseGender(data.gender),
         occupation: parseOccupation(data.occupation),
         ssn: parseSsn(data.ssn),
-        entries: []
+        entries: parseEntries(data.entries)
     };
 };
 
@@ -56,6 +56,36 @@ const parseString = (fieldName: string, data: unknown): string => {
     return data;
 };
 
+const parseEntries = (entries: unknown): Entry[] => {
+    if (!isEntries(entries)) {
+        throw new Error(`provide correct entries`);
+    }
+
+    return entries;
+};
+
 const isGender = (gender: string): gender is Gender => {
     return Object.values(Gender).map(g => g.toString()).includes(gender);
+};
+
+const isEntryType = (type: string): type is EntryType => {
+    return Object.values(EntryType).map(t => t.toString()).includes(type);
+};
+
+const isEntries = (entries: unknown): entries is Entry[] => {
+    if (!Array.isArray(entries)) {
+        return false;
+    }
+
+    for (const entry of entries) {
+        if (!isEntry(entry)) {
+            return false;
+        }
+    }
+
+    return true;
+};
+
+const isEntry = (entry: unknown): entry is Entry => {
+    return entry != null && typeof entry == "object" && "type" in entry && isString(entry.type) && isEntryType(entry.type);
 };
