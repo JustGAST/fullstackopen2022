@@ -2,11 +2,15 @@ import {useMatch} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {Typography} from "@mui/material";
 
-import {Gender, Patient} from "../../types";
+import {Diagnose, Gender, Patient} from "../../types";
 import patientsService from "../../services/patients"
 import PatientEntry from './PatientEntry';
 
-const PatientPage = () => {
+interface Props {
+    diagnoses: Diagnose[];
+}
+
+const PatientPage = ({diagnoses}: Props) => {
     const patientIdMatch = useMatch('/patients/:id')
     const [patient, setPatient] = useState<Patient|null>(null)
 
@@ -43,7 +47,7 @@ const PatientPage = () => {
                     Entries
                 </Typography>
                 {patient.entries.map(entry => (
-                    <PatientEntry key={entry.id} entry={entry} />
+                    <PatientEntry key={entry.id} entry={entry} diagnoses={diagnoses} />
                 ))}
             </div>
         </div>
