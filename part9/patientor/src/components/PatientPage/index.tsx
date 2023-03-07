@@ -4,6 +4,7 @@ import {Typography} from "@mui/material";
 
 import {Gender, Patient} from "../../types";
 import patientsService from "../../services/patients"
+import PatientEntry from './PatientEntry';
 
 const PatientPage = () => {
     const patientIdMatch = useMatch('/patients/:id')
@@ -38,6 +39,12 @@ const PatientPage = () => {
                 <div>
                     occupation: {patient.occupation}
                 </div>
+                <Typography variant="h5" style={{marginTop: '20px'}}>
+                    Entries
+                </Typography>
+                {patient.entries.map(entry => (
+                    <PatientEntry key={entry.id} entry={entry} />
+                ))}
             </div>
         </div>
     );
