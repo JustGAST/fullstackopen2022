@@ -40,7 +40,7 @@ export interface HealthCheckEntry extends BaseEntry {
 export interface OccupationalHealthcareEntry extends BaseEntry {
   type: EntryType.OccupationalHealthcare;
   employerName: string;
-  sickLeave: {
+  sickLeave?: {
     startDate: string;
     endDate: string;
   }
@@ -72,3 +72,12 @@ export interface Patient {
 }
 
 export type PatientFormValues = Omit<Patient, "id" | "entries">;
+
+/**
+ * Helper function for exhaustive type checking
+ */
+export const assertNever = (value: never): never => {
+  throw new Error(
+    `Unhandled discriminated union member: ${JSON.stringify(value)}`
+  );
+};
