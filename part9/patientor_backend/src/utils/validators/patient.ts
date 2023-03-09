@@ -1,5 +1,5 @@
 import {Entry, EntryType, Gender, NewPatient} from "../../types";
-import {isDate, isString} from "./common";
+import {isDate, isString, parseString} from "./common";
 
 export const toNewPatient = (data: unknown): NewPatient => {
     if (!(data && typeof data == 'object')) {
@@ -46,14 +46,6 @@ const parseOccupation = (occupation: unknown): string => {
 
 const parseSsn = (ssn: unknown): string => {
     return parseString("ssn", ssn);
-};
-
-const parseString = (fieldName: string, data: unknown): string => {
-    if (!isString(data)) {
-        throw new Error(`${fieldName} should be string`);
-    }
-
-    return data;
 };
 
 const parseEntries = (entries: unknown): Entry[] => {

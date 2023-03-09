@@ -2,6 +2,7 @@ import express from "express";
 import patientsService from "../services/patientsService";
 import {toNewPatient} from "../utils/validators/patient";
 import {handleError} from "../utils/errorsHandler";
+import {toNewEntry} from "../utils/validators/entry";
 
 const patientsRouter = express.Router();
 
@@ -25,6 +26,17 @@ patientsRouter.post('/', (req, res) => {
         const newPatient = patientsService.addPatient(patientInput);
 
         res.json(newPatient);
+    } catch (error) {
+        handleError(res, error);
+    }
+});
+
+patientsRouter.post('/:id/entries', (req, res) => {
+    try {
+        const newEntry = toNewEntry(req.body);
+        const patient = patientsService.addEntry(req.params.id, newEntry);
+
+        res.json(patient);
     } catch (error) {
         handleError(res, error);
     }

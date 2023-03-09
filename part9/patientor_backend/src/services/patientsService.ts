@@ -1,7 +1,7 @@
 import {v4 as uuidV4} from 'uuid';
 
 import patients from "../../data/patients";
-import {NewPatient, NonSensitivePatient, Patient} from "../types";
+import {EntryWithoutId, NewPatient, NonSensitivePatient, Patient} from "../types";
 
 
 let patientsData = patients;
@@ -29,9 +29,26 @@ const addPatient = (patient: NewPatient): NonSensitivePatient => {
     return newPatient;
 };
 
+const addEntry = (patientId: string, entry: EntryWithoutId): Patient => {
+    const patient = findById(patientId);
+    if (!patient) {
+        throw new Error("no patient with such id");
+    }
+
+    patient.entries = patient.entries.concat({
+        id: uuidV4(),
+        ...entry
+    });
+
+    patientsData = patientsData.map(p => p.id === patientId ? patient : p);
+
+    return patient;
+};
+
 export default {
     findById,
     getPatients,
     getPatientsNonSensitive,
     addPatient,
+    addEntry
 };

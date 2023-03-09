@@ -37,21 +37,25 @@ export interface HealthCheckEntry extends BaseEntry {
     healthCheckRating: HealthCheckRating;
 }
 
+export interface SickLeave {
+    startDate: string;
+    endDate: string;
+}
+
 export interface OccupationalHealthcareEntry extends BaseEntry {
     type: EntryType.OccupationalHealthcare;
     employerName: string;
-    sickLeave?: {
-        startDate: string;
-        endDate: string;
-    }
+    sickLeave?: SickLeave
+}
+
+export interface Discharge {
+    date: string;
+    criteria: string;
 }
 
 export interface HospitalEntry extends BaseEntry {
     type: EntryType.Hospital;
-    discharge: {
-        date: string;
-        criteria: string;
-    }
+    discharge: Discharge
 }
 
 export type Entry = HealthCheckEntry | OccupationalHealthcareEntry | HospitalEntry;
@@ -60,6 +64,7 @@ export type Entry = HealthCheckEntry | OccupationalHealthcareEntry | HospitalEnt
 export type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
 // Define Entry without the 'id' property
 export type EntryWithoutId = UnionOmit<Entry, 'id'>;
+export type BaseEntryWithoutId = Omit<BaseEntry, 'id'>;
 
 export type Patient = {
     id: string,
@@ -74,3 +79,12 @@ export type Patient = {
 export type NewPatient = Omit<Patient, 'id'>;
 
 export type NonSensitivePatient = Omit<Patient, 'ssn' | 'entries'>;
+
+/**
+ * Helper function for exhaustive type checking
+ */
+export const assertNever = (value: never): never => {
+    throw new Error(
+      `Unhandled discriminated union member: ${JSON.stringify(value)}`
+    );
+};
