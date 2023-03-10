@@ -80,8 +80,8 @@ const toHospitalEntry = (data: object): EntryWithoutId => {
 };
 
 const parseBaseEntry = (data: object): BaseEntryWithoutId => {
-  if (!('id' in data && 'description' in data && 'date' in data && 'specialist' in data
-    && 'type' in data && 'diagnosisCodes' in data)) {
+  if (!('description' in data && 'date' in data && 'specialist' in data
+    && 'type' in data)) {
     throw new Error("missing essential data");
   }
 
@@ -90,7 +90,7 @@ const parseBaseEntry = (data: object): BaseEntryWithoutId => {
     date: parseString('date', data.date),
     specialist: parseString('specialist', data.specialist),
     type: parseEntryType(data.type),
-    diagnosisCodes: parseDiagnosisCodes(data.diagnosisCodes),
+    diagnosisCodes: 'diagnosisCodes' in data ? parseDiagnosisCodes(data.diagnosisCodes) : undefined,
   };
 };
 

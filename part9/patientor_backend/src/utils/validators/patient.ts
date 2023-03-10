@@ -6,7 +6,14 @@ export const toNewPatient = (data: unknown): NewPatient => {
         throw new Error("data is not present or not an object");
     }
 
-    if (!("name" in data && "dateOfBirth" in data && "gender" in data && "occupation" in data && "ssn" in data && "entries" in data)) {
+    if (!(
+      "name" in data &&
+      "dateOfBirth" in data &&
+      "gender" in data &&
+      "occupation" in data &&
+      "ssn" in data &&
+      "entries" in data
+    )) {
         throw new Error("some fields are missing: name, dateOfBirth, gender, occupation, ssn");
     }
 
