@@ -38,6 +38,7 @@ const PatientEntry = ({entry, diagnoses}: Props) => {
                 {diagnosesItems}
             </ul>
           )}
+          <div>Type: {entry.type}</div>
           {extra}
           <div>
               Diagnose by {entry.specialist}

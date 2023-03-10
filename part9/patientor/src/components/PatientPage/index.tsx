@@ -5,6 +5,7 @@ import {Typography} from "@mui/material";
 import {Diagnose, Gender, Patient} from "../../types";
 import patientsService from "../../services/patients"
 import PatientEntry from './PatientEntry';
+import AddEntry from "./AddEntry";
 
 interface Props {
     diagnoses: Diagnose[];
@@ -27,6 +28,10 @@ const PatientPage = ({diagnoses}: Props) => {
         void fetchPatient()
     }, [patientIdMatch]);
 
+    const onSave = (patient: Patient) => {
+        setPatient(patient)
+    }
+
     if (!patient) {
         return <div>Loading...</div>
     }
@@ -46,6 +51,7 @@ const PatientPage = ({diagnoses}: Props) => {
                 <Typography variant="h5" style={{marginTop: '20px'}}>
                     Entries
                 </Typography>
+                <AddEntry patientId={patient.id} onSave={onSave} />
                 {patient.entries.map(entry => (
                     <PatientEntry key={entry.id} entry={entry} diagnoses={diagnoses} />
                 ))}
