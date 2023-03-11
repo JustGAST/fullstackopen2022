@@ -34,23 +34,26 @@ const HospitalEntryForm = ({onCancel, onSubmit}: Props) => {
       onSubmit(entry);
       setEntry(initialState);
     } catch (e) {
+      console.log(e);
       throw e
     }
   }
 
   return (
     <div>
-      Hospital
       <form onSubmit={onSubmitEntry}>
-        <BaseEntryFields entry={entry} onChange={onChange} />
         <Stack spacing={2}>
-          <TextField label={'discharge date'} name={'date'} value={entry.discharge.date} onChange={onChangeDischarge} />
-          <TextField label={'discharge criteria'} name={'criteria'} value={entry.discharge.criteria} onChange={onChangeDischarge} />
+          <Box>Add new Hospital Entry</Box>
+          <BaseEntryFields entry={entry} onChange={onChange} />
+          <Stack spacing={2}>
+            <TextField label={'discharge date'} name={'date'} value={entry.discharge.date} onChange={onChangeDischarge} />
+            <TextField label={'discharge criteria'} name={'criteria'} value={entry.discharge.criteria} onChange={onChangeDischarge} />
+          </Stack>
+          <Box>
+            <Button type='submit' variant={'contained'}>Save</Button>
+            <Button variant="outlined" color={"error"} onClick={onCancel}>Cancel</Button>
+          </Box>
         </Stack>
-        <Box sx={{margin: "10px 0"}}>
-          <Button type='submit' variant={'contained'}>Save</Button>
-          <Button variant="outlined" color={"error"} onClick={onCancel}>Cancel</Button>
-        </Box>
       </form>
 
     </div>

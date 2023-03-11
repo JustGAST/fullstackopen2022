@@ -1,10 +1,11 @@
-import {Button} from "@mui/material";
+import {Alert, Button} from "@mui/material";
 import React, {useState} from "react";
 import {EntryType, NewEntry, Patient} from "../../types";
 import HealthCheckEntryForm from "./NewEntryForm/HealthCheckEntryForm";
 import HospitalEntryForm from "./NewEntryForm/HospitalEntryForm";
 import OccupationalHealthcareEntryForm from "./NewEntryForm/OccupationalHealthcareEntryForm";
 import patientsService from '../../services/patients';
+import axios from "axios";
 
 interface Props {
   patientId: Patient['id'];
@@ -13,10 +14,21 @@ interface Props {
 
 const AddEntry = ({patientId, onSave}: Props) => {
   const [entryType, setEntryType] = useState('');
+  const [error, setError] = useState<string>('');
   const onCancel = () => setEntryType('')
-  const onSubmit = (entry: NewEntry) => {
-    patientsService.addEntry(patientId, entry)
-      .then(patient => onSave(patient));
+  const onSubmit = async (entry: NewEntry) => {
+    try {
+      const patient = await patientsService.addEntry(patientId, entry)
+      onSave(patient);
+      setError('')
+    }
+    catch (e) {
+      if (axios.isAxiosError(e) && e.response && 'data' in e.response && 'error' in e.response.data) {
+        setError(e.response.data.error);
+      } else {
+        console.log(e)
+      }
+    }
   }
 
   return (
@@ -26,6 +38,9 @@ const AddEntry = ({patientId, onSave}: Props) => {
       <Button variant="outlined" onClick={() => setEntryType(EntryType.OccupationalHealthcare)}>Add OccupationalHealthcare Entry</Button>
 
       <div style={{margin: "30px 0"}}>
+        {error && (
+          <Alert severity={'error'} sx={{marginBottom: 2}}>{error}</Alert>
+        )}
         {
           entryType === EntryType.Hospital &&
           <HospitalEntryForm onSubmit={onSubmit} onCancel={onCancel} />

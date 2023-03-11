@@ -85,6 +85,13 @@ const parseBaseEntry = (data: object): BaseEntryWithoutId => {
     throw new Error("missing essential data");
   }
 
+  if (!data.date) {
+    throw new Error('date should be set');
+  }
+  if (!data.specialist) {
+    throw new Error('specialist should be set');
+  }
+
   return {
     description: parseString('description', data.description),
     date: parseString('date', data.date),
