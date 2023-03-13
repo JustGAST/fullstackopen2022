@@ -62,8 +62,15 @@ export type UnionOmit<T, K extends string | number | symbol> = T extends unknown
 export type NewEntry = UnionOmit<Entry, 'id'>;
 export type NewHospitalEntry = Omit<HospitalEntry, 'id'>
 export type NewHealthCheckEntry = Omit<HealthCheckEntry, 'id'>
-export type NewOccupationalHealthcareEntry = Omit<OccupationalHealthcareEntry, 'id'>
+export type OccupationalHealthcareEntryWithoutId = Omit<OccupationalHealthcareEntry, 'id'>
 export type NewBaseEntry = Omit<BaseEntry, 'id'>;
+
+export type NewOccupationalHealthcareEntry = OccupationalHealthcareEntryWithoutId & {
+  sickLeave: {
+    startDate: string;
+    endDate: string;
+  }
+}
 
 export interface Patient {
   id: string;
