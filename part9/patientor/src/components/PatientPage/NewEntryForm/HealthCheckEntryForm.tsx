@@ -1,4 +1,4 @@
-import {Box, Button, Stack, TextField} from "@mui/material";
+import {Box, Button, FormControl, InputLabel, MenuItem, Select, Stack} from "@mui/material";
 import {EntryType, HealthCheckRating, NewHealthCheckEntry} from "../../../types";
 import React, {useState} from "react";
 import BaseEntryFields, {baseEntryInitialState} from "./BaseEntryFields";
@@ -21,6 +21,10 @@ const HealthCheckEntryForm = ({onCancel, onSubmit}: Props) => {
     setEntry({...entry, [target.name]: target.value});
   }
 
+  const onChangeDate = (newDate: string) => {
+    setEntry({...entry, date: newDate})
+  }
+
   const onSubmitEntry = (e: React.SyntheticEvent) => {
     try {
       e.preventDefault();
@@ -32,14 +36,28 @@ const HealthCheckEntryForm = ({onCancel, onSubmit}: Props) => {
     }
   }
 
+  const healthCheckRating = HealthCheckRating;
+  const healthCheckRatingKeys: number[] = Object.keys(healthCheckRating).map(k => Number(k)).filter(k => !isNaN(k));
+
   return (
     <div>
       <form onSubmit={onSubmitEntry}>
         <Stack spacing={2}>
           <Box>Add new HealthCheck Entry</Box>
-          <BaseEntryFields entry={entry} onChange={onChange} />
+          <BaseEntryFields entry={entry} onChange={onChange} onChangeDate={onChangeDate}/>
           <Stack spacing={2}>
-            <TextField label={'healthcheck rating'} name={'healthCheckRating'} value={entry.healthCheckRating} onChange={onChange} />
+            <FormControl>
+              <InputLabel id='healthcheck-rating-label'>Healthcheck rating</InputLabel>
+              <Select
+                labelId='healthcheck-rating-label'
+                value={entry.healthCheckRating}
+                onChange={({target}) => setEntry({...entry, healthCheckRating: target.value as HealthCheckRating})}
+              >
+                {healthCheckRatingKeys.map(ratingKey => (
+                    <MenuItem key={ratingKey} value={ratingKey}>{healthCheckRating[ratingKey]}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Stack>
           <Box>
             <Button type='submit' variant={'contained'}>Save</Button>

@@ -1,7 +1,11 @@
 import {Box, Button, Stack, TextField} from "@mui/material";
-import {EntryType, NewOccupationalHealthcareEntry} from "../../../types";
 import React, {useState} from "react";
+import {PickerChangeHandler} from "@mui/x-date-pickers/internals/hooks/usePicker/usePickerValue";
+import dayjs from "dayjs";
+import {DatePicker, DateValidationError} from "@mui/x-date-pickers";
+
 import BaseEntryFields, {baseEntryInitialState} from "./BaseEntryFields";
+import {EntryType, NewOccupationalHealthcareEntry} from "../../../types";
 
 interface Props {
   onCancel: () => void;
@@ -25,8 +29,21 @@ const OccupationalHealthcareEntryForm = ({onCancel, onSubmit}: Props) => {
     setEntry({...entry, [target.name]: target.value});
   }
 
-  const onChangeSickLeave: React.ChangeEventHandler<HTMLInputElement> = ({target}) => {
-    setEntry({...entry, sickLeave: {...entry.sickLeave, [target.name]: target.value}})
+  const onChangeDate = (newDate: string) => {
+    setEntry({...entry, date: newDate})
+  }
+
+  const onChangeSickLeaveDate = (field: string, newDate: string) => {
+    setEntry({...entry, sickLeave: {...entry.sickLeave, [field]: newDate}})
+  }
+
+  const onChangeDateLocal: (field: string) => PickerChangeHandler<dayjs.Dayjs | null, DateValidationError> = (field: string) => (newDate) => {
+    if (newDate == null) {
+      console.log('no new date from datepicker');
+      return;
+    }
+
+    onChangeSickLeaveDate(field, newDate.format('YYYY-MM-DD'))
   }
 
   const onSubmitEntry = (e: React.SyntheticEvent) => {
@@ -45,11 +62,11 @@ const OccupationalHealthcareEntryForm = ({onCancel, onSubmit}: Props) => {
       <form onSubmit={onSubmitEntry}>
         <Stack spacing={2}>
           <Box>Add new Occupational Healthcare Entry</Box>
-          <BaseEntryFields entry={entry} onChange={onChange} />
+          <BaseEntryFields entry={entry} onChange={onChange} onChangeDate={onChangeDate} />
           <Stack spacing={2}>
             <TextField label={'employer name'} name={'employerName'} value={entry.employerName} onChange={onChange} />
-            <TextField label={'sick leave start date'} name={'startDate'} value={entry.sickLeave.startDate} onChange={onChangeSickLeave} />
-            <TextField label={'sick leave end date'} name={'endDate'} value={entry.sickLeave.endDate} onChange={onChangeSickLeave} />
+            <DatePicker label={'sick leave start date'} value={dayjs(entry.sickLeave.startDate)} onChange={onChangeDateLocal('startDate')}/>
+            <DatePicker label={'sick leave end date'} value={dayjs(entry.sickLeave.endDate)} onChange={onChangeDateLocal('endDate')}/>
           </Stack>
           <Box>
             <Button type='submit' variant={'contained'}>Save</Button>

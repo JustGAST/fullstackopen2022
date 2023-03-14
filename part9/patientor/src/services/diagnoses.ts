@@ -11,8 +11,9 @@ const getAll = async () => {
   return data;
 };
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default {
+const diagnosesService = {
   getAll
 };
+
+export default diagnosesService;
 
