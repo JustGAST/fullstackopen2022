@@ -1,10 +1,9 @@
 import {Box, Button, Stack, TextField} from "@mui/material";
-import {EntryType, NewHospitalEntry} from "../../../types";
 import React, {useState} from "react";
+
+import {EntryType, NewHospitalEntry} from "../../../types";
 import BaseEntryFields, {baseEntryInitialState} from "./BaseEntryFields";
-import dayjs from "dayjs";
-import {DatePicker, DateValidationError} from "@mui/x-date-pickers";
-import {PickerChangeHandler} from "@mui/x-date-pickers/internals/hooks/usePicker/usePickerValue";
+import DatePicker from "./DatePicker";
 
 interface Props {
   onCancel: () => void;
@@ -39,15 +38,6 @@ const HospitalEntryForm = ({onCancel, onSubmit}: Props) => {
     setEntry({...entry, discharge: {...entry.discharge, date: newDate}})
   }
 
-  const onChangeDateLocal: PickerChangeHandler<dayjs.Dayjs | null, DateValidationError> = (newDate) => {
-    if (newDate == null) {
-      console.log('no new date from datepicker');
-      return;
-    }
-
-    onChangeDischargeDate(newDate.format('YYYY-MM-DD'))
-  }
-
   const onSubmitEntry = (e: React.SyntheticEvent) => {
     try {
       e.preventDefault();
@@ -66,7 +56,7 @@ const HospitalEntryForm = ({onCancel, onSubmit}: Props) => {
           <Box>Add new Hospital Entry</Box>
           <BaseEntryFields entry={entry} onChange={onChange} onChangeDate={onChangeDate} />
           <Stack spacing={2}>
-            <DatePicker label={'discharge date'} value={dayjs(entry.discharge.date)} onChange={onChangeDateLocal}/>
+            <DatePicker label={'discharge date'} value={entry.discharge.date} onChange={onChangeDischargeDate}/>
             <TextField label={'discharge criteria'} name={'criteria'} value={entry.discharge.criteria} onChange={onChangeDischarge} />
           </Stack>
           <Box>

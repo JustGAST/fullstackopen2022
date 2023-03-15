@@ -1,8 +1,6 @@
 import {Box, Button, Stack, TextField} from "@mui/material";
 import React, {useState} from "react";
-import {PickerChangeHandler} from "@mui/x-date-pickers/internals/hooks/usePicker/usePickerValue";
-import dayjs from "dayjs";
-import {DatePicker, DateValidationError} from "@mui/x-date-pickers";
+import DatePicker from "./DatePicker";
 
 import BaseEntryFields, {baseEntryInitialState} from "./BaseEntryFields";
 import {EntryType, NewOccupationalHealthcareEntry} from "../../../types";
@@ -37,15 +35,6 @@ const OccupationalHealthcareEntryForm = ({onCancel, onSubmit}: Props) => {
     setEntry({...entry, sickLeave: {...entry.sickLeave, [field]: newDate}})
   }
 
-  const onChangeDateLocal: (field: string) => PickerChangeHandler<dayjs.Dayjs | null, DateValidationError> = (field: string) => (newDate) => {
-    if (newDate == null) {
-      console.log('no new date from datepicker');
-      return;
-    }
-
-    onChangeSickLeaveDate(field, newDate.format('YYYY-MM-DD'))
-  }
-
   const onSubmitEntry = (e: React.SyntheticEvent) => {
     try {
       e.preventDefault();
@@ -65,8 +54,8 @@ const OccupationalHealthcareEntryForm = ({onCancel, onSubmit}: Props) => {
           <BaseEntryFields entry={entry} onChange={onChange} onChangeDate={onChangeDate} />
           <Stack spacing={2}>
             <TextField label={'employer name'} name={'employerName'} value={entry.employerName} onChange={onChange} />
-            <DatePicker label={'sick leave start date'} value={dayjs(entry.sickLeave.startDate)} onChange={onChangeDateLocal('startDate')}/>
-            <DatePicker label={'sick leave end date'} value={dayjs(entry.sickLeave.endDate)} onChange={onChangeDateLocal('endDate')}/>
+            <DatePicker label={'sick leave start date'} value={entry.sickLeave.startDate} onChange={(newDate) => onChangeSickLeaveDate('startDate', newDate)}/>
+            <DatePicker label={'sick leave end date'} value={entry.sickLeave.endDate} onChange={(newDate) => onChangeSickLeaveDate('endDate', newDate)}/>
           </Stack>
           <Box>
             <Button type='submit' variant={'contained'}>Save</Button>
