@@ -39,14 +39,9 @@ const HospitalEntryForm = ({onCancel, onSubmit}: Props) => {
   }
 
   const onSubmitEntry = (e: React.SyntheticEvent) => {
-    try {
-      e.preventDefault();
-      onSubmit(entry);
-      setEntry(initialState);
-    } catch (e) {
-      console.log(e);
-      throw e
-    }
+    e.preventDefault();
+    onSubmit(entry);
+    setEntry(initialState);
   }
 
   return (
