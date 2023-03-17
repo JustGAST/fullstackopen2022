@@ -1,4 +1,4 @@
-import {Box, Button, Stack, TextField} from "@mui/material";
+import {Box, Button, Stack, TextField, Typography} from "@mui/material";
 import React, {useState} from "react";
 
 import {EntryType, NewHospitalEntry} from "../../../types";
@@ -48,7 +48,7 @@ const HospitalEntryForm = ({onCancel, onSubmit}: Props) => {
     <div>
       <form onSubmit={onSubmitEntry}>
         <Stack spacing={2}>
-          <Box>Add new Hospital Entry</Box>
+          <Typography variant={'h5'}>Add new Hospital Entry</Typography>
           <BaseEntryFields entry={entry} onChange={onChange} onChangeDate={onChangeDate} />
           <Stack spacing={2}>
             <DatePicker label={'discharge date'} value={entry.discharge.date} onChange={onChangeDischargeDate}/>

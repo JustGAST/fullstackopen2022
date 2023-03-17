@@ -1,4 +1,4 @@
-import {Box, Button, FormControl, InputLabel, MenuItem, Select, Stack} from "@mui/material";
+import {Box, Button, FormControl, InputLabel, MenuItem, Select, Stack, Typography} from "@mui/material";
 import {EntryType, HealthCheckRating, NewHealthCheckEntry} from "../../../types";
 import React, {useState} from "react";
 import BaseEntryFields, {baseEntryInitialState} from "./BaseEntryFields";
@@ -38,7 +38,9 @@ const HealthCheckEntryForm = ({onCancel, onSubmit}: Props) => {
     <div>
       <form onSubmit={onSubmitEntry}>
         <Stack spacing={2}>
-          <Box>Add new HealthCheck Entry</Box>
+          <Typography variant={'h5'}>
+            Add new HealthCheck Entry
+          </Typography>
           <BaseEntryFields entry={entry} onChange={onChange} onChangeDate={onChangeDate}/>
           <Stack spacing={2}>
             <FormControl>

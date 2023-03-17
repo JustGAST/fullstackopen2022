@@ -1,4 +1,4 @@
-import {Box, Button, Stack, TextField} from "@mui/material";
+import {Box, Button, Stack, TextField, Typography} from "@mui/material";
 import React, {useState} from "react";
 import DatePicker from "./DatePicker";
 
@@ -45,7 +45,7 @@ const OccupationalHealthcareEntryForm = ({onCancel, onSubmit}: Props) => {
     <div>
       <form onSubmit={onSubmitEntry}>
         <Stack spacing={2}>
-          <Box>Add new Occupational Healthcare Entry</Box>
+          <Typography variant={'h5'}>Add new Occupational Healthcare Entry</Typography>
           <BaseEntryFields entry={entry} onChange={onChange} onChangeDate={onChangeDate} />
           <Stack spacing={2}>
             <TextField label={'employer name'} name={'employerName'} value={entry.employerName} onChange={onChange} />
