@@ -1,4 +1,6 @@
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet} from 'react-native';
+
+import Text from './Text';
 
 const styles = StyleSheet.create({
   item: {
@@ -13,10 +15,10 @@ const styles = StyleSheet.create({
     height: 50,
   },
   avatarColumn: {
-    flex: 1,
+    width: 60,
   },
   infoColumn: {
-    flex: 5
+    maxWidth: 310,
   }
 })
 
@@ -27,7 +29,7 @@ const RepositoryItem = ({repository}) => {
         <Image style={styles.avatar} source={{uri: repository.ownerAvatarUrl}} />
       </View>
       <View style={styles.infoColumn}>
-        <Text>Full name: {repository.fullName}</Text>
+        <Text fontWeight='bold' fontSize='subheading'>Full name: {repository.fullName}</Text>
         <Text>Description: {repository.description}</Text>
         <Text>Language: {repository.language}</Text>
         <Text>Stars: {repository.stargazersCount}</Text>
