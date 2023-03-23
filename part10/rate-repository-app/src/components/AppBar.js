@@ -8,17 +8,19 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight,
     marginBottom: 10,
-    flexGrow: 1,
+    flexGrow: 0,
     flexShrink: 1,
     backgroundColor: theme.colors.barColor,
     flexDirection: "row",
+    height: 110,
   },
 });
 
 const AppBar = () => {
   return (
     <View style={styles.container}>
-      <AppBarTab text='Repositories' onPress={() => console.log('press')} />
+      <AppBarTab text='Repositories' to={"/"} />
+      <AppBarTab text='SignIn' to={"/sign-in"} />
     </View>
   )
 };
