@@ -5,9 +5,12 @@ import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   errorText: {
-    marginTop: 5,
+    marginBottom: 5,
     color: 'red',
-  }
+  },
+  errorBorder: {
+    borderColor: 'red',
+  },
 })
 
 const FormikTextInput = ({name, ...props}) => {
