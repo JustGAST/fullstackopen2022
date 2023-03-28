@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {Platform, ScrollView, StyleSheet, View} from 'react-native';
 import Constants from 'expo-constants';
 
 import AppBarTab from './AppBarTab';
@@ -12,7 +12,11 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     backgroundColor: theme.colors.barColor,
     flexDirection: "row",
-    height: 110,
+    height: Platform.select({
+      'android': 100,
+      'ios': 110,
+      'default': 110,
+    }),
   },
 });
 
