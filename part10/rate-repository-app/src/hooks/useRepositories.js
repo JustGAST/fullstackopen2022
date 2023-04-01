@@ -5,15 +5,13 @@ const useRepositories = () => {
   const {data, error, loading} = useQuery(GET_REPOSITORIES, {
     fetchPolicy: 'cache-and-network'
   });
-  console.log("data", data, "error", error, "loading", loading);
 
   if (error) {
     console.log(error);
   }
 
   if (loading === false && error === undefined) {
-    console.log("data", data);
-    return {repositories: data, loading}
+    return {repositories: data.repositories, loading}
   }
 
   return { repositories: null, loading }

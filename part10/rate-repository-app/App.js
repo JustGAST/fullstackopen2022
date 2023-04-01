@@ -15,7 +15,7 @@ export default function App() {
           <Main/>
         </ApolloProvider>
       </NativeRouter>
-      <StatusBar style="auto"/>;
+      <StatusBar style="auto"/>
     </>
   );
 }
