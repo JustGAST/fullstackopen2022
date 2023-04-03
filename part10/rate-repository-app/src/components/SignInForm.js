@@ -7,7 +7,7 @@ import Text from './Text';
 import theme from '../theme';
 
 const initialValues = {
-  login: '',
+  username: '',
   password: '',
 }
 
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 });
 
 const validationSchema = yup.object().shape({
-  login: yup
+  username: yup
     .string()
     .required('Login is required'),
   password: yup
@@ -29,16 +29,16 @@ const validationSchema = yup.object().shape({
     .min(5, 'Password must be at least 5 characters long')
 });
 
-const SignInForm = () => {
-  const onSubmit = (values) => {
-    console.log(values);
+const SignInForm = ({onSubmit}) => {
+  const onSubmitForm = (values) => {
+    onSubmit(values)
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+    <Formik initialValues={initialValues} onSubmit={onSubmitForm} validationSchema={validationSchema}>
       {({handleSubmit}) => (
         <View>
-          <FormikTextInput name={'login'} placeholder={'Login'} />
+          <FormikTextInput name={'username'} placeholder={'Login'} />
           <FormikTextInput name={'password'} placeholder={'Password'} secureTextEntry />
           <Pressable onPress={handleSubmit} style={styles.submitButton}>
             <Text color={'light'}>Login</Text>
