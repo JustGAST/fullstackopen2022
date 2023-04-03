@@ -7,7 +7,7 @@ const useRepositories = () => {
   });
 
   if (error) {
-    console.log(error);
+    console.log("error loading repositories", error);
   }
 
   if (loading === false && error === undefined) {
