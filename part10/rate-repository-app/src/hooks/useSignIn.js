@@ -5,13 +5,16 @@ const useSignIn = () => {
   const [mutate, result] = useMutation(AUTHENTICATE);
 
   const signIn = async ({username, password}) => {
-    console.log(8, username, password);
-
     const result = await mutate({
       variables: {username, password}
     });
 
-    return result;
+    if (!(Object.hasOwn(result, 'data')
+      && Object.hasOwn(result.data, 'authenticate'))) {
+      return null;
+    }
+
+    return result.data.authenticate;
   }
 
   return [signIn, result];

@@ -2,6 +2,7 @@ import Text from './Text';
 import {KeyboardAvoidingView, Platform, StyleSheet} from 'react-native';
 import SignInForm from './SignInForm';
 import useSignIn from '../hooks/useSignIn';
+import AuthStorage from '../utils/authStorage';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,11 +20,16 @@ const SignIn = () => {
 
   const onSubmit = async ({username, password}) => {
     try {
-      const {data} = await signIn({username, password});
-      console.log(23);
-      console.log(data);
+      const data = await signIn({username, password});
+      if (data === null) {
+        return;
+      }
+
+      const authStorage = new AuthStorage();
+      await authStorage.setAccessToken(data.accessToken);
+      const token = await authStorage.getAccessToken();
+      console.log(data, token);
     } catch (e) {
-      console.log(26);
       console.log(e);
     }
   }
