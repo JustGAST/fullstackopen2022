@@ -2,7 +2,7 @@ import Text from './Text';
 import {KeyboardAvoidingView, Platform, StyleSheet} from 'react-native';
 import SignInForm from './SignInForm';
 import useSignIn from '../hooks/useSignIn';
-import AuthStorage from '../utils/authStorage';
+import {useNavigate} from 'react-router-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
 
 const SignIn = () => {
   const [signIn] = useSignIn();
+  const navigate = useNavigate();
 
   const onSubmit = async ({username, password}) => {
     try {
@@ -25,10 +26,8 @@ const SignIn = () => {
         return;
       }
 
-      const authStorage = new AuthStorage();
-      await authStorage.setAccessToken(data.accessToken);
-      const token = await authStorage.getAccessToken();
-      console.log(data, token);
+      console.log(data.accessToken);
+      navigate("/")
     } catch (e) {
       console.log(e);
     }
