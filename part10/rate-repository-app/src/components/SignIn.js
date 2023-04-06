@@ -26,7 +26,6 @@ const SignIn = () => {
         return;
       }
 
-      console.log(data.accessToken);
       navigate("/")
     } catch (e) {
       console.log(e);
