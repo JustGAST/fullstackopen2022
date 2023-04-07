@@ -13,8 +13,12 @@ const useSignIn = () => {
       variables: {username, password}
     });
 
-    if (!(Object.hasOwn(result, 'data')
-      && Object.hasOwn(result.data, 'authenticate'))) {
+    if (!(
+      result
+      && result.hasOwnProperty('data')
+      && result.data.hasOwnProperty('authenticate')
+    )
+    ) {
       return null;
     }
 
