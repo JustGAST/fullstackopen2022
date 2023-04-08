@@ -3,6 +3,8 @@ import Constants from 'expo-constants';
 
 import AppBarTab from './AppBarTab';
 import theme from '../theme';
+import {useQuery} from '@apollo/client';
+import {ME} from '../graphql/queries';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,14 +23,21 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
+  const meQuery = useQuery(ME)
+
+  let signButton = <AppBarTab text='Sign In' to={"/sign-in"} />
+  if (meQuery.data != null && meQuery.data.me != null) {
+    signButton = <AppBarTab text='Sign Out' to={'/sign-out'} />
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
         <AppBarTab text='Repositories' to={"/"} />
-        <AppBarTab text='SignIn' to={"/sign-in"} />
+        {signButton}
       </ScrollView>
     </View>
-  )
+  );
 };
 
 export default AppBar;
