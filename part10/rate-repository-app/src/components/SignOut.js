@@ -3,16 +3,12 @@ import {useAuthStorage} from '../hooks/useAuthStorage';
 import {useApolloClient} from '@apollo/client';
 import {useEffect} from 'react';
 
-const SignOut = async () => {
-  console.log('SignOut');
-
+const SignOut = () => {
   const authStorage = useAuthStorage();
   const apolloClient = useApolloClient();
 
-  console.log('useAuthStorage');
-
   if (authStorage == null) {
-    return <Navigate to='/sign-in' />;
+    return <Navigate to="/sign-in"/>;
   }
 
   const logout = async () => {
@@ -24,7 +20,7 @@ const SignOut = async () => {
     logout();
   }, []);
 
-  return <Navigate to='/sign-in' />;
+  return <Navigate to="/sign-in"/>;
 }
 
 export default SignOut;
