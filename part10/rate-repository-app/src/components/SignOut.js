@@ -7,11 +7,11 @@ const SignOut = () => {
   const authStorage = useAuthStorage();
   const apolloClient = useApolloClient();
 
-  if (authStorage == null) {
-    return <Navigate to="/sign-in"/>;
-  }
-
   const logout = async () => {
+    if (!authStorage) {
+      return;
+    }
+
     await authStorage.removeAccessToken();
     await apolloClient.resetStore();
   }
