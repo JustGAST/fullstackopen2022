@@ -44,10 +44,10 @@ const styles = StyleSheet.create({
 
 const RepositoryItem = ({repository}) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID={"repositoryItem"}>
       <View style={styles.item}>
         <View style={styles.avatarColumn}>
-          <Image style={styles.avatar} source={{uri: repository.ownerAvatarUrl}}/>
+          <Image style={styles.avatar} source={{uri: repository.ownerAvatarUrl}} testID={"repositoryItemAvatar"}/>
         </View>
         <View style={styles.infoColumn}>
           <Text fontWeight="bold" fontSize="subheading">{repository.fullName}</Text>
