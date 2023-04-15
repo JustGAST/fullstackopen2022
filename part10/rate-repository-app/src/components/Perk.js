@@ -1,5 +1,6 @@
 import {StyleSheet, View} from 'react-native';
 import Text from './Text';
+import { format } from '../utils/perkValueFormatter';
 
 
 const styles = StyleSheet.create({
@@ -17,13 +18,9 @@ const styles = StyleSheet.create({
 });
 
 const Perk = ({name, value}) => {
-  if (value > 999) {
-    value = (value / 1000).toFixed(1) + "k"
-  }
-
   return (
     <View style={styles.container}>
-      <Text style={styles.value} fontWeight='bold'>{value}</Text>
+      <Text style={styles.value} fontWeight='bold'>{format(value)}</Text>
       <Text style={styles.name} color={'textSecondary'}>{name}</Text>
     </View>
   );

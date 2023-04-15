@@ -1,6 +1,7 @@
 import {render, screen} from '@testing-library/react-native';
 
 import RepositoryListContainer from '../../components/RepositoryListContainer';
+import {format} from '../../utils/perkValueFormatter';
 
 describe("RepositoryListContainer", () => {
   it('renders repository information correctly', () => {
@@ -53,42 +54,40 @@ describe("RepositoryListContainer", () => {
     const [firstRepositoryItem, secondRepositoryItem] = repositoryItems;
 
     expect(repositoryItems.length).toBe(2);
-
     expect(firstRepositoryItem).toBeDefined();
-    expect(firstRepositoryItem).toContainElement(
-      screen.getByText('jaredpalmer/formik')
-    );
-    expect(firstRepositoryItem).toContainElement(
-      screen.getByText('Build forms in React, without the tears')
-    );
-    expect(firstRepositoryItem).toContainElement(
-      screen.getByText('TypeScript')
-    );
-    expect(firstRepositoryItem).toContainElement(
-      screen.getByText('1.6k')
-    );
-    expect(firstRepositoryItem).toContainElement(
-      screen.getByText('21.9k')
-    );
-    expect(firstRepositoryItem).toContainElement(
-      screen.getByText('88')
-    );
-    expect(firstRepositoryItem).toContainElement(
-      screen.getAllByText('3')[0]
-    );
-    expect(firstRepositoryItem).toContainElement(
-      screen.getAllByTestId('repositoryItemAvatar')[0]
-    );
-    expect(screen.getAllByTestId('repositoryItemAvatar')[0]).toHaveProp('source', {
-      uri: 'https://avatars2.githubusercontent.com/u/4060187?v=4',
-    })
-
-
     expect(secondRepositoryItem).toBeDefined();
-    // expect(screen.getByTestId('repositoryItem')).toContain("Ivan Ivanov");
-    // expect(screen.getByText('JavaScript')).toBeTruthy()
-    // expect(screen.getByText('80')).toBeTruthy()
-    // expect(screen.getByText('90')).toBeTruthy()
-    // expect(screen.getByText('100')).toBeTruthy()
+
+    let i = 0;
+    for (const {node} of repositories.edges) {
+      expect(repositoryItems[i]).toContainElement(
+        screen.getByText(node.fullName)
+      );
+      expect(repositoryItems[i]).toContainElement(
+        screen.getByText(node.description)
+      );
+      expect(repositoryItems[i]).toContainElement(
+        screen.getByText(node.language)
+      );
+      expect(repositoryItems[i]).toContainElement(
+        screen.getByText(String(format(node.forksCount)))
+      );
+      expect(repositoryItems[i]).toContainElement(
+        screen.getByText(String(format(node.stargazersCount)))
+      );
+      expect(repositoryItems[i]).toContainElement(
+        screen.getByText(String(format(node.ratingAverage)))
+      );
+      expect(repositoryItems[i]).toContainElement(
+        screen.getAllByText(String(format(node.reviewCount)))[i]
+      );
+      expect(repositoryItems[i]).toContainElement(
+        screen.getAllByTestId('repositoryItemAvatar')[i]
+      );
+      expect(screen.getAllByTestId('repositoryItemAvatar')[i]).toHaveProp('source', {
+        uri: node.ownerAvatarUrl,
+      });
+
+      i++;
+    }
   })
 })
