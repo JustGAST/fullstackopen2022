@@ -1,16 +1,10 @@
-import {useQuery} from '@apollo/client';
 import {GET_REPOSITORIES} from '../graphql/queries';
+import useServerQuery from './useServerQuery.js';
 
 const useRepositories = () => {
-  const {data, error, loading} = useQuery(GET_REPOSITORIES, {
-    fetchPolicy: 'cache-and-network'
-  });
+  const {data, loading} = useServerQuery(GET_REPOSITORIES)
 
-  if (error) {
-    console.log("error loading repositories", error);
-  }
-
-  if (loading === false && error === undefined) {
+  if (loading === false) {
     return {repositories: data.repositories, loading}
   }
 

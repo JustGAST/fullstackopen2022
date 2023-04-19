@@ -1,8 +1,9 @@
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, Linking, Pressable, StyleSheet, View} from 'react-native';
 
 import Text from './Text';
 import theme from '../theme';
 import Perk from './Perk';
+import ui from '../ui.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,9 +41,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 10
   },
+  button: {
+    padding: 10,
+    backgroundColor: theme.colors.primary,
+    borderRadius: 5
+  }
 });
 
-const RepositoryItem = ({repository}) => {
+const RepositoryItem = ({repository, showLink}) => {
+  const onViewButtonPressed = () => {
+    Linking.openURL(`https://github.com/${repository.fullName}`)
+  }
+
   return (
     <View style={styles.container} testID={"repositoryItem"}>
       <View style={styles.item}>
@@ -65,6 +75,11 @@ const RepositoryItem = ({repository}) => {
         <Perk value={repository.reviewCount} name={'Reviews'}/>
         <Perk value={repository.ratingAverage} name={'Rating'}/>
       </View>
+      {showLink ? (
+        <Pressable style={ui.button} onPress={onViewButtonPressed}>
+          <Text color={'light'}>View on GitHub</Text>
+        </Pressable>
+      ) : null}
     </View>
   )
 }
