@@ -1,5 +1,20 @@
-const RepositoryView = ({repository}) => {
+import {Navigate, useMatch} from 'react-router-native';
+import useRepository from '../hooks/useRepositoriy';
+
+const RepositoryView = () => {
+  const repositoryIdMatch = useMatch('/:id');
+  const repositoryId = repositoryIdMatch ? repositoryIdMatch.params.id : null;
+
+  console.log(repositoryIdMatch);
+
+  const {repository} = useRepository(repositoryId);
+
+  if (!repository) {
+    console.log("no repository");
+    return <Navigate to={"/"}/>;
+  }
+
   return (
-    <RepositoryView repository={repository} showLink={true} />
-  )
-}
+    <RepositoryView repository={repository} showLink={true}/>
+  );
+};
