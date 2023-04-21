@@ -1,8 +1,9 @@
 import {useQuery} from '@apollo/client';
 
-const useRepositories = (query) => {
+const useRepositories = (query, variables) => {
   const {data, error, loading} = useQuery(query, {
-    fetchPolicy: 'cache-and-network'
+    fetchPolicy: 'cache-and-network',
+    variables
   });
 
   if (error) {

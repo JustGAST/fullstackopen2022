@@ -57,7 +57,6 @@ const RepositoryItem = ({repository, showLink}) => {
   }
 
   const onRepositoryPressed = () => {
-    console.log(repository);
     navigate(`/${repository.id}`)
   }
 

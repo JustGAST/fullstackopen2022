@@ -5,8 +5,6 @@ const RepositoryView = () => {
   const repositoryIdMatch = useMatch('/:id');
   const repositoryId = repositoryIdMatch ? repositoryIdMatch.params.id : null;
 
-  console.log(repositoryIdMatch);
-
   const {repository} = useRepository(repositoryId);
 
   if (!repository) {
@@ -18,3 +16,5 @@ const RepositoryView = () => {
     <RepositoryView repository={repository} showLink={true}/>
   );
 };
+
+export default RepositoryView;

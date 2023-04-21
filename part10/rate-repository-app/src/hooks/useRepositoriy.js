@@ -7,12 +7,15 @@ const useRepository = (repositoryId) => {
   }
 
   const {data, loading} = useServerQuery(GET_REPOSITORY, {
-    variables: {repositoryId}
+    repositoryId
   });
 
   if (loading === false) {
     return {repository: data.repository, loading}
   }
+
+  console.log("data");
+  console.log(data);
 
   return { repository: null, loading }
 };

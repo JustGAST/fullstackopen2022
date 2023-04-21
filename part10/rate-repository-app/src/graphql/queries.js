@@ -16,7 +16,7 @@ export const GET_REPOSITORIES = gql`
 `;
 
 export const GET_REPOSITORY = gql`
-  query ($repositoryId: String!) {
+  query ($repositoryId: ID!) {
     repository(id: $repositoryId) {
       ...RepositoryFullInfo
     }
