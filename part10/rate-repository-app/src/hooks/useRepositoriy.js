@@ -11,6 +11,8 @@ const useRepository = (repositoryId) => {
   });
 
   if (loading === false) {
+    console.log("data, loading false");
+    console.log(data, loading);
     return {repository: data.repository, loading}
   }
 

@@ -6,6 +6,9 @@ const useRepositories = (query, variables) => {
     variables
   });
 
+  console.log("data, loading");
+  console.log(data, loading);
+
   if (error) {
     console.log("error loading data", error);
     return {data: null, loading: true};
