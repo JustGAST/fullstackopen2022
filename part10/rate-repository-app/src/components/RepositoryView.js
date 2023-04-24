@@ -10,7 +10,6 @@ const RepositoryView = () => {
   const {repository, loading} = useRepository(repositoryId);
 
   if (loading) {
-    console.log("loading");
     return <Text>Loading...</Text>;
   }
 
