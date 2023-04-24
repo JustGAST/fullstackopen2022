@@ -16,9 +16,6 @@ const useRepository = (repositoryId) => {
     return {repository: data.repository, loading}
   }
 
-  console.log("data");
-  console.log(data);
-
   return { repository: null, loading }
 };
 

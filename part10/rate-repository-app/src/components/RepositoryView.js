@@ -1,11 +1,17 @@
 import {Navigate, useMatch} from 'react-router-native';
-import useRepository from '../hooks/useRepositoriy';
+import useRepository from '../hooks/useRepository';
+import Text from './Text.js';
 
 const RepositoryView = () => {
   const repositoryIdMatch = useMatch('/:id');
   const repositoryId = repositoryIdMatch ? repositoryIdMatch.params.id : null;
 
-  const {repository} = useRepository(repositoryId);
+  const {repository, loading} = useRepository(repositoryId);
+
+  if (loading) {
+    console.log("loading");
+    return <Text>Loading...</Text>;
+  }
 
   if (!repository) {
     console.log("no repository");
