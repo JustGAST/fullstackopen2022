@@ -43,9 +43,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   button: {
-    padding: 10,
-    backgroundColor: theme.colors.primary,
-    borderRadius: 5
+    marginTop: 10
   }
 });
 
@@ -84,8 +82,8 @@ const RepositoryItem = ({repository, showLink}) => {
           <Perk value={repository.ratingAverage} name={'Rating'}/>
         </View>
         {showLink ? (
-          <Pressable style={ui.button} onPress={onViewButtonPressed}>
-            <Text color={'light'}>View on GitHub</Text>
+          <Pressable style={[ui.button, styles.button]} onPress={onViewButtonPressed}>
+            <Text style={ui.buttonText} fontWeight={'bold'} color={'light'}>View on GitHub</Text>
           </Pressable>
         ) : null}
       </View>
