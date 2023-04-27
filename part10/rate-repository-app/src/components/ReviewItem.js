@@ -50,6 +50,10 @@ const styles = StyleSheet.create({
 
 
 const ReviewItem = ({ review }) => {
+  const reviewDate = (new Date(review.createdAt)).toLocaleDateString('de-DE', {
+    year: 'numeric', month: '2-digit', day: 'numeric'
+  });
+
   return (
     <View key={review.id} style={[styles.container, styles.item]}>
       <View style={styles.avatarColumn}>
@@ -58,9 +62,9 @@ const ReviewItem = ({ review }) => {
         </View>
       </View>
       <View style={styles.infoColumn}>
+        <Text fontWeight={'bold'}>{review.user.username}</Text>
+        <Text color={'textSecondary'}>{reviewDate}</Text>
         <Text>Review: {review.text}</Text>
-        <Text>Created at: {review.createdAt}</Text>
-        <Text>Username: {review.user.username}</Text>
       </View>
     </View>
   )
