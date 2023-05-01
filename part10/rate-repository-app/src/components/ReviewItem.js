@@ -21,30 +21,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  avatarColumn: {
+  sideColumn: {
     width: 60,
   },
   infoColumn: {
     maxWidth: 310,
   },
-  description: {
-    marginVertical: 10,
-  },
-  languageContainer: {
-    flexDirection: "column",
-    alignItems: "flex-start"
-  },
-  language: {
-    backgroundColor: theme.colors.primary,
-    borderRadius: 5,
-    padding: 5,
-  },
-  perks: {
-    flexDirection: "row",
-    marginTop: 10
-  },
-  button: {
-    marginTop: 10
+  textMargin: {
+    marginBottom: 5,
   }
 });
 
@@ -56,15 +40,21 @@ const ReviewItem = ({ review }) => {
 
   return (
     <View key={review.id} style={[styles.container, styles.item]}>
-      <View style={styles.avatarColumn}>
+      <View style={styles.sideColumn}>
         <View style={styles.rating}>
-          <Text>{review.rating}</Text>
+          <Text
+            color={"primary"}
+            fontSize={"subheading"}
+            fontWeight={"bold"}
+          >
+            {review.rating}
+          </Text>
         </View>
       </View>
       <View style={styles.infoColumn}>
-        <Text fontWeight={'bold'}>{review.user.username}</Text>
-        <Text color={'textSecondary'}>{reviewDate}</Text>
-        <Text>Review: {review.text}</Text>
+        <Text fontWeight={'bold'} style={styles.textMargin}>{review.user.username}</Text>
+        <Text color={'textSecondary'} style={styles.textMargin}>{reviewDate}</Text>
+        <Text>{review.text}</Text>
       </View>
     </View>
   )
