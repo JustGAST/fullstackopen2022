@@ -25,16 +25,19 @@ const styles = StyleSheet.create({
 const AppBar = () => {
   const meQuery = useQuery(ME)
 
-  let signButton = <AppBarTab text='Sign In' to={"/sign-in"} />
+  let signTab = <AppBarTab text='Sign In' to={"/sign-in"} />
+  let createReviewTab = null;
   if (meQuery.data != null && meQuery.data.me != null) {
-    signButton = <AppBarTab text='Sign Out' to={'/sign-out'} />
+    signTab = <AppBarTab text='Sign Out' to={'/sign-out'} />
+    createReviewTab = <AppBarTab text='Create a review' to={"/create-review"} />
   }
 
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
         <AppBarTab text='Repositories' to={"/"} />
-        {signButton}
+        {createReviewTab}
+        {signTab}
       </ScrollView>
     </View>
   );
