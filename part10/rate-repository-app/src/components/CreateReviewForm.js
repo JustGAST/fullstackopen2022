@@ -20,7 +20,7 @@ const validationSchema = yup.object().shape({
   review: yup.string()
 })
 
-const ReviewForm = ({onSubmit}) => {
+const CreateReviewForm = ({onSubmit}) => {
   return (
     <Formik
       initialValues={initialValues}
@@ -42,4 +42,4 @@ const ReviewForm = ({onSubmit}) => {
   )
 }
 
-export default ReviewForm
+export default CreateReviewForm
