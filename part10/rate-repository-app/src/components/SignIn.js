@@ -1,8 +1,9 @@
-import Text from './Text';
 import {KeyboardAvoidingView, Platform, StyleSheet} from 'react-native';
+import {useNavigate} from 'react-router-native';
+
+import Text from './Text';
 import SignInForm from './SignInForm';
 import useSignIn from '../hooks/useSignIn';
-import {useNavigate} from 'react-router-native';
 
 const styles = StyleSheet.create({
   container: {
