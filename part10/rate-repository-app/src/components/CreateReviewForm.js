@@ -18,7 +18,7 @@ const validationSchema = yup.object().shape({
     .required('Repository owner name is required'),
   repositoryName: yup.string().required(),
   rating: yup.number().min(0).max(100).required(),
-  review: yup.string()
+  review: yup.string(),
 })
 
 const CreateReviewForm = ({onSubmit}) => {
