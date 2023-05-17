@@ -39,7 +39,6 @@ const CreateReview = () => {
     >
       <Text fontWeight={'bold'} fontSize={'subheading'} style={styles.header}>Create a review</Text>
       <CreateReviewForm onSubmit={onSubmit} />
-
     </KeyboardAvoidingView>
   );
 }
