@@ -17,7 +17,7 @@ describe('SignInForm', () => {
       expect(onSubmitMock).toHaveBeenCalledTimes(1);
       expect(onSubmitMock.mock.calls[0][0]).toEqual({
         username: 'matti',
-        password: 'password'
+        password: 'password',
       })
     })
   })
