@@ -27,6 +27,7 @@ const AppBar = () => {
 
   let signTab = <AppBarTab text='Sign In' to={"/sign-in"} />
   let createReviewTab = null;
+
   if (meQuery.data != null && meQuery.data.me != null) {
     signTab = <AppBarTab text='Sign Out' to={'/sign-out'} />
     createReviewTab = <AppBarTab text='Create a review' to={"/create-review"} />
