@@ -7,7 +7,7 @@ const useCreateReview = () => {
 
   const createReview = async ({repositoryName, ownerName, rating, text}) => {
     const result = await mutate({
-      variables: {repositoryName, ownerName, rating, text}
+      variables: {repositoryName, ownerName, rating: Number(rating), text}
     });
 
     if (!(

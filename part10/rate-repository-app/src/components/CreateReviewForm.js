@@ -4,6 +4,7 @@ import {Pressable, View} from 'react-native';
 
 import FormikTextInput from './FormikTextInput.js';
 import Text from './Text.js';
+import ui from '../ui.js';
 
 const initialValues = {
   ownerName: '',
@@ -16,8 +17,8 @@ const validationSchema = yup.object().shape({
   ownerName: yup
     .string()
     .required('Repository owner name is required'),
-  repositoryName: yup.string().required(),
-  rating: yup.number().min(0).max(100).required(),
+  repositoryName: yup.string().required('Repository name is required'),
+  rating: yup.number().min(0).max(100).required('Rating is required'),
   review: yup.string(),
 })
 
@@ -34,7 +35,7 @@ const CreateReviewForm = ({onSubmit}) => {
           <FormikTextInput name={'repositoryName'} placeholder={'Repository name'}/>
           <FormikTextInput name={'rating'} placeholder={'Rating between 0 and 100'}/>
           <FormikTextInput name={'review'} placeholder={'Review'} multiline={true}/>
-          <Pressable onPress={handleSubmit}>
+          <Pressable onPress={handleSubmit} style={ui.button}>
             <Text color={'light'}>Create a review</Text>
           </Pressable>
         </View>

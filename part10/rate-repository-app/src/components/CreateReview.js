@@ -35,6 +35,7 @@ const CreateReview = () => {
 
   return (
     <KeyboardAvoidingView
+      style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <Text fontWeight={'bold'} fontSize={'subheading'} style={styles.header}>Create a review</Text>
