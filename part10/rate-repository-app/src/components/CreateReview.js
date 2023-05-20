@@ -20,9 +20,9 @@ const CreateReview = () => {
   const [createReview] = useCreateReview();
   const navigate = useNavigate();
 
-  const onSubmit = async ({ repositoryName, ownerName, rating, text }) => {
+  const onSubmit = async ({ repositoryName, ownerName, rating, review }) => {
     try {
-      const data = await createReview({ repositoryName, ownerName, rating, text });
+      const data = await createReview({ repositoryName, ownerName, rating, review });
       if (data === null) {
         return;
       }

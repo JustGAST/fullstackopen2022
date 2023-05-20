@@ -5,9 +5,9 @@ import {CREATE_REVIEW} from '../graphql/mutations.js';
 const useCreateReview = () => {
   const [mutate, result] = useMutation(CREATE_REVIEW);
 
-  const createReview = async ({repositoryName, ownerName, rating, text}) => {
+  const createReview = async ({repositoryName, ownerName, rating, review}) => {
     const result = await mutate({
-      variables: {repositoryName, ownerName, rating: Number(rating), text}
+      variables: {repositoryName, ownerName, rating: Number(rating), text: review}
     });
 
     if (!(
